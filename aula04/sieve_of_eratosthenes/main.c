@@ -12,7 +12,7 @@ int main() {
     clock_t start, stop;
     start = clock();
 
-    bit_sieve(qtt, 0);
+    char_sieve(qtt, 0);
 
     stop = clock();
     double time_taken = ((double) stop - start) / CLOCKS_PER_SEC;
