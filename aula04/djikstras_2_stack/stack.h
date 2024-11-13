@@ -5,8 +5,8 @@ typedef struct stack stack;
 
 stack * create_stack();
 
-void insert_stack(void * item);
+void push(stack * s, void * item);
 
-void * remove_stack(stack * s);
+void * pop(stack * s);
 
 void free_stack(stack * s);

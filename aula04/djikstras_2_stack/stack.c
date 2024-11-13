@@ -37,14 +37,14 @@ stack * create_stack() {
 return s;
 }
 
-void insert_stack(stack * s, void * item) {
+void push(stack * s, void * item) {
 
     cell * nc = create_cell(s -> last, item);
     s -> last = nc;
 
 }
 
-void * remove_stack(stack * s) {
+void * pop(stack * s) {
 
     void * item = get_item(s);
     cell * c = s -> last;
