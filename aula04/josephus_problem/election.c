@@ -97,6 +97,23 @@ int list_election(int n_people, int m_elimination) {
 
 int array_election(int n_people, int m_elimination) {
 
+    int * election = (int *) calloc(n_people, sizeof(int));
+    int runner = 0, candidates = n_people, counter = m_elimination;
 
+    while(candidates > 1) {
+        while(1) {
+            if(!election[runner]) counter--; 
+            if(!counter) break;
+            runner++;
+            if(runner == n_people) runner = 0;
+        }
+        counter = m_elimination;
+        election[runner] = 1;
+        candidates--;
+    }
+
+    for(int i = 0; i < n_people; i++) {
+        if(!election[i]) printf("%d", i+1);
+    }
 
 }

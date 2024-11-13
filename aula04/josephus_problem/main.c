@@ -7,7 +7,7 @@ int main() {
 
     scanf("%d %d", &nPeople, &mElimination);
 
-    list_election(nPeople, mElimination);
+    array_election(nPeople, mElimination);
 
 return 0;
 }
