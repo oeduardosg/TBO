@@ -76,7 +76,7 @@ void remove_cell(circular_list * list, int num) {
 
 }
 
-int list_election(int n_people, int m_elimination) {
+int list_election(int n_people, int m_elimination, int print) {
 
     circular_list * list = create_list();
 
@@ -88,14 +88,14 @@ int list_election(int n_people, int m_elimination) {
         remove_cell(list, m_elimination);
     }
 
-    printf("%d", list -> first -> person_number);
+    if(print) printf("%d", list -> first -> person_number);
 
     free(list -> first);
     free(list);
 
 }
 
-int array_election(int n_people, int m_elimination) {
+int array_election(int n_people, int m_elimination, int print) {
 
     int * election = (int *) calloc(n_people, sizeof(int));
     int runner = 0, candidates = n_people, counter = m_elimination;
@@ -112,8 +112,10 @@ int array_election(int n_people, int m_elimination) {
         candidates--;
     }
 
-    for(int i = 0; i < n_people; i++) {
-        if(!election[i]) printf("%d", i+1);
+    if(print) {
+        for(int i = 0; i < n_people; i++) {
+            if(!election[i]) printf("%d", i+1);
+        }
     }
 
 }

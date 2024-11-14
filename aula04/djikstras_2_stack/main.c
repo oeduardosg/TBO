@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "stack.h"
+#include <time.h>
 
 double operation(double num1, double num2, char op) {
 
@@ -25,6 +26,9 @@ int main() {
     stack * operators = create_stack();
 
     scanf("%*c");
+
+    clock_t start, stop;
+    start = clock();
 
     while(parenthesis) {
 
@@ -74,6 +78,10 @@ int main() {
     free(final);
     free_stack(operands);
     free_stack(operators);
+
+    stop = clock();
+    double time_taken = ((double) stop - start) / CLOCKS_PER_SEC;
+    printf("\ntime: %lf\n", time_taken);
 
 return 0;
 }

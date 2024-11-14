@@ -1,9 +1,19 @@
-run:
+run-list:
 	clear
-	gcc -o teste *.c
-	./teste
+	gcc -o test list_main.c election.c
+	./test
 
-valgrind:
+run-array:
 	clear
-	gcc -o teste *.c
-	valgrind --leak-check=full ./teste
+	gcc -o test array_main.c election.c
+	./test
+
+valgrind-list:
+	clear
+	gcc -o test list_main.c election.c
+	valgrind --leak-check=full ./test
+
+valgrind-array:
+	clear
+	gcc -o test array_main.c election.c
+	valgrind --leak-check=full ./test
