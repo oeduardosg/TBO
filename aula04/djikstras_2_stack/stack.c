@@ -40,13 +40,14 @@ return s;
 void push(stack * s, void * item) {
 
     cell * nc = create_cell(s -> last, item);
+    nc -> prior = s -> last;
     s -> last = nc;
 
 }
 
 void * pop(stack * s) {
 
-    void * item = get_item(s);
+    void * item = get_item(s -> last);
     cell * c = s -> last;
     s -> last = get_prior(c);
 
