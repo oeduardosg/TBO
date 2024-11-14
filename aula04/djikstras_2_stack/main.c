@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include "stack.h"
 
+double operation(double num1, double num2, char op) {
+
+    switch (op) {
+        case '+':
+            return num2 + num1;
+        case '-':
+            return num2 - num1;
+        case '/':
+            return num2 / num1;
+        case '*':
+            return num2 * num1;
+    }
+
+}
+
 int main() {
 
     int parenthesis = 1;
@@ -21,7 +36,14 @@ int main() {
 
         if(scanned == '(') parenthesis++;
         else if(scanned == ')') {   //Remove two numbers from the stack and an operator
-            //NOT IMPLEMENTED!!!
+            double * num1 = pop(operands);
+            double * num2 = pop(operands);
+            char * op = pop(operators);
+            *num1 = operation(*num1, *num2, *op);
+            push(operands, num1);
+            free(num2);
+            free(op);
+            parenthesis--;
             last_was_number = 0;
         }
         else if(scanned == '+' || scanned == '-' || scanned == '*' || scanned == '/') {
@@ -33,18 +55,25 @@ int main() {
         }
         else {
             if(last_was_number) {
-                int * num = pop(operands);
-                *num *= 10 + ((int)scanned - 48);
+                double * num = pop(operands);
+                *num *= 10 + ((double)scanned - 48);
                 push(operands, num);
             }
             else {
-                int * num = (int *) calloc(1, sizeof(int));
-                *num = (int)scanned - 48;
+                double * num = (double *) calloc(1, sizeof(double));
+                *num = (double)scanned - 48;
                 push(operands, num);
+                last_was_number = 1;
             }
         }
 
     }
+
+    double * final = pop(operands);
+    printf("%.2lf", *final);
+    free(final);
+    free_stack(operands);
+    free_stack(operators);
 
 return 0;
 }
