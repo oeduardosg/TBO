@@ -118,4 +118,6 @@ int array_election(int n_people, int m_elimination, int print) {
         }
     }
 
+    free(election);
+
 }
