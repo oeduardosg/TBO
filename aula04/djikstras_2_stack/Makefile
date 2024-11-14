@@ -1,9 +1,9 @@
 run:
 	clear
-	gcc -o teste *.c
-	./teste
+	gcc -o test *.c
+	./test
 
 valgrind:
 	clear
-	gcc -o teste *.c
-	valgrind --leak-check=full ./teste
+	gcc -o test *.c
+	valgrind --leak-check=full ./test
