@@ -32,7 +32,10 @@ void InsertBst(bst * node, int key) {
         *ckey = key;
         node -> key = ckey;
     }
-    else if(key <= *node -> key) {
+    else if(key == *node -> key) {
+        return;
+    }
+    else if(key < *node -> key) {
         if(IsEmptyBst(node -> left)) node -> left = CreateBst();
         InsertBst(node -> left, key);
     }
