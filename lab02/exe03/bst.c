@@ -54,3 +54,46 @@ void FreeBst(bst * node) {
     free(node);
 
 }
+
+int HeightBst(bst * node) {
+
+    if(!node) return -1;
+    int left_height = HeightBst(node -> left);
+    int right_height = HeightBst(node -> right);
+
+return 1 + (left_height >= right_height ? left_height : right_height);
+}
+
+void PrintBst(bst * node) {
+    printf("%d ", *node -> key);
+}
+
+void RecPreorder(bst * t, void (*visit)(bst *)) {
+
+    if(!t) return;
+
+    visit(t);
+    RecPreorder(t -> left, visit);
+    RecPreorder(t -> right, visit);
+
+}
+
+void RecInOrder(bst * t, void (*visit)(bst *)) {
+
+    if(!t) return;
+
+    RecPreorder(t -> left, visit);
+    visit(t);
+    RecPreorder(t -> right, visit);
+
+}
+
+void RecPostOrder(bst * t, void (*visit)(bst *)) {
+
+    if(!t) return;
+
+    RecPreorder(t -> left, visit);
+    RecPreorder(t -> right, visit);
+    visit(t);
+    
+}

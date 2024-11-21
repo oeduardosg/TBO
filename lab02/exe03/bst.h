@@ -22,4 +22,16 @@ void InsertBst(bst * node, int key);
  */
 void FreeBst(bst * node);
 
+/**
+ * Calculates the total tree size;
+ * @param node tree node to calculate the size of;
+ */
+int HeightBst(bst * node);
+
+void RecPreorder(bst * t, void (*visit)(bst *));
+
+void RecInOrder(bst * t, void (*visit)(bst *));
+
+void RecPostOrder(bst * t, void (*visit)(bst *));
+
 #endif
