@@ -84,9 +84,9 @@ void RecInorder(bst * t, void (*visit)(bst *)) {
 
     if(!t) return;
 
-    RecPreorder(t -> left, visit);
+    RecInorder(t -> left, visit);
     visit(t);
-    RecPreorder(t -> right, visit);
+    RecInorder(t -> right, visit);
 
 }
 
@@ -94,8 +94,8 @@ void RecPostorder(bst * t, void (*visit)(bst *)) {
 
     if(!t) return;
 
-    RecPreorder(t -> left, visit);
-    RecPreorder(t -> right, visit);
+    RecPostorder(t -> left, visit);
+    RecPostorder(t -> right, visit);
     visit(t);
     
 }

@@ -6,6 +6,16 @@
 int main() {
 
     bst * node = CreateBst();
+    
+    /** Sample
+    InsertBst(node, 10);
+    InsertBst(node, 5);
+    InsertBst(node, 15);
+    InsertBst(node, 4);
+    InsertBst(node, 6);
+    InsertBst(node, 14);
+    InsertBst(node, 16);
+     */
 
     srand(time(NULL));
 

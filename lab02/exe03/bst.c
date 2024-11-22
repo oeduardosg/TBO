@@ -78,22 +78,22 @@ void RecPreorder(bst * t, void (*visit)(bst *)) {
 
 }
 
-void RecInOrder(bst * t, void (*visit)(bst *)) {
+void RecInorder(bst * t, void (*visit)(bst *)) {
 
     if(!t) return;
 
-    RecPreorder(t -> left, visit);
+    RecInorder(t -> left, visit);
     visit(t);
-    RecPreorder(t -> right, visit);
+    RecInorder(t -> right, visit);
 
 }
 
-void RecPostOrder(bst * t, void (*visit)(bst *)) {
+void RecPostorder(bst * t, void (*visit)(bst *)) {
 
     if(!t) return;
 
-    RecPreorder(t -> left, visit);
-    RecPreorder(t -> right, visit);
+    RecPostorder(t -> left, visit);
+    RecPostorder(t -> right, visit);
     visit(t);
     
 }
