@@ -22,7 +22,7 @@ int main() {
     stop = clock();
     double time_taken = ((double) stop - start) / CLOCKS_PER_SEC;
 
-    printf("\nIter Pre-order time: %lf\n", time_taken);
+    printf("\nBFS time: %lf\n", time_taken);
 
 return 0;
 }
