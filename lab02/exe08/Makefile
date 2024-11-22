@@ -6,4 +6,4 @@ run:
 valgrind:
 	clear
 	gcc -o test *.c
-	valgrind --leak-check=full ./test
+	valgrind ./test
