@@ -6,7 +6,7 @@ void sort(Item  * a, int lo, int hi) {
 
     for(int i = lo; i < hi; i++) {
         if(turn) {
-            for(int j = lo; j < hi - i; j++) {
+            for(int j = lo; j < hi - i - 1; j++) {
                 if(less(a[j + 1], a[j])) exch(a[j], a[j + 1]);
             }
             turn = 0;
@@ -17,5 +17,5 @@ void sort(Item  * a, int lo, int hi) {
             }
             turn = 1;
         }
-
+    }
 }
