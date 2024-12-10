@@ -17,7 +17,27 @@
 //       limite superior frouxo (mas seguro) para o número máximo simultâneo de
 //       eventos é N^3, aonde N é o número de partículas.
 
+int less(double a, double b) {
+   return a < b; 
+}
+
+void sink() {
+    
+}
+
+void rise(Event ** e, int k) {
+    while (k > 1 && less(get_time(e[k/2]), get_time(e))) {
+        exch(e[k], e[k/2]);
+        k = k/2;
+    }
+}
+
 // TODO: Crie a struct pq.
+struct pq {
+    int max_N;
+    int last;
+    Event ** array;
+};
 
 /*
  * Cria uma nova fila de prioridade mínima com o limite de elementos informado.
@@ -25,6 +45,11 @@
 PQ* PQ_create(int max_N) {
     // TODO: Implemente a criação da fila que suporta no máximo o número de
     //       de eventos informados no parâmetro.
+    PQ * pq = (PQ *) calloc(1, sizeof(Event **));
+    pq -> max_N = max_N;
+    pq -> last = 0;
+
+return pq;
 }
 
 /*
@@ -33,6 +58,11 @@ PQ* PQ_create(int max_N) {
 void PQ_destroy(PQ *pq) {
     // TODO: Implemente essa função que libera toda a memória da fila,
     //       destruindo inclusive os eventos que estavam na fila.
+    for(int i = 0; i < pq -> max_N; i++) {
+        if(pq -> array[i]) destroy_event(pq -> array[i]);
+    }
+    free(pq -> array);
+    free(pq);
 }
 
 /*
@@ -44,6 +74,7 @@ void PQ_insert(PQ *pq, Event *e) {
     //       Assuma que 'e' não é nulo. É importante testar overflow (inserção
     //       em uma fila que já contém o número máximo de eventos) para evitar
     //       dores de cabeça com acessos inválidos na memória.
+
 }
 
 /*
