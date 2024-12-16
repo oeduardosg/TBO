@@ -18,13 +18,13 @@
 //       limite superior frouxo (mas seguro) para o número máximo simultâneo de
 //       eventos é N^3, aonde N é o número de partículas.
 
-void rise(Event ** e, int k, int max){
+void sink(Event ** e, int k, int max){
     while (k * 2 <= max) {
         int j = k * 2;
-        if (j < max && less(e[j], e[j+1])){
+        if (j < max && compare(e[j + 1], e[j]) < 0){
             j++;
         }
-        if (!less(e[k], e[j])) {
+        if (compare(e[k], e[j]) < 0) {
             break;
         }
         exch(e[k], e[j]);
@@ -33,7 +33,7 @@ void rise(Event ** e, int k, int max){
 }
 
 void rise(Event ** e, int k) {
-    while (k > 1 && less(get_time(e[k/2]), get_time(e[k]))) {
+    while (k > 1 && compare(e[k/2], e[k]) > 0) {
         exch(e[k], e[k/2]);
         k = k/2;
     }
@@ -52,7 +52,8 @@ struct pq {
 PQ* PQ_create(int max_N) {
     // TODO: Implemente a criação da fila que suporta no máximo o número de
     //       de eventos informados no parâmetro.
-    PQ * pq = (PQ *) calloc(1, sizeof(Event **));
+    PQ * pq = (PQ *) calloc(1, sizeof(PQ));
+    pq -> array = (Event **) calloc(max_N, sizeof(Event *));
     pq -> max_N = max_N;
     pq -> last = 0;
 
@@ -65,8 +66,8 @@ return pq;
 void PQ_destroy(PQ *pq) {
     // TODO: Implemente essa função que libera toda a memória da fila,
     //       destruindo inclusive os eventos que estavam na fila.
-    for(int i = 1; i < pq -> max_N; i++) {
-        if(pq -> array[i]) destroy_event(pq -> array[i]);
+    for(int i = 1; i < pq -> last; i++) {
+        destroy_event(pq -> array[i]);
     }
     free(pq -> array);
     free(pq);
@@ -81,9 +82,14 @@ void PQ_insert(PQ *pq, Event *e) {
     //       Assuma que 'e' não é nulo. É importante testar overflow (inserção
     //       em uma fila que já contém o número máximo de eventos) para evitar
     //       dores de cabeça com acessos inválidos na memória.
+    if(pq -> last == pq -> max_N) {
+        printf("\nMax number of events reached.\n");
+        return;
+    }
+
     pq -> last++;
     pq -> array[pq -> last] = e;
-    rise(pq -> array, pq -> last, pq -> max_N);
+    rise(pq -> array, pq -> last);
 
 }
 
@@ -98,7 +104,9 @@ Event* PQ_delmin(PQ *pq) {
     exch(pq -> array[1], pq -> array[pq -> last]);
     Event * min = pq -> array[pq -> last];
     pq -> last--;
+    sink(pq -> array, 1, pq -> last);
 
+return min;
 }
 
 /*
@@ -106,7 +114,7 @@ Event* PQ_delmin(PQ *pq) {
  */
 bool PQ_is_empty(PQ *pq) {
     // TODO: Implemente essa função.]
-    if(pq -> last > 0) return true;
+    if(pq -> last <= 0) return true;
     else return false;
 }
 
