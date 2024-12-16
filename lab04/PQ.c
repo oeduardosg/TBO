@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "event.h"
 #include "PQ.h"
+#include "item.h"
 
 // TODO: Aqui você deve implementar uma fila com prioridade mínima para
 //       ordenar os eventos por tempo, isto é, o evento com o menor tempo tem
@@ -17,16 +18,22 @@
 //       limite superior frouxo (mas seguro) para o número máximo simultâneo de
 //       eventos é N^3, aonde N é o número de partículas.
 
-int less(double a, double b) {
-   return a < b; 
-}
-
-void sink() {
-    
+void rise(Event ** e, int k, int max){
+    while (k * 2 <= max) {
+        int j = k * 2;
+        if (j < max && less(e[j], e[j+1])){
+            j++;
+        }
+        if (!less(e[k], e[j])) {
+            break;
+        }
+        exch(e[k], e[j]);
+        k = j;
+    }
 }
 
 void rise(Event ** e, int k) {
-    while (k > 1 && less(get_time(e[k/2]), get_time(e))) {
+    while (k > 1 && less(get_time(e[k/2]), get_time(e[k]))) {
         exch(e[k], e[k/2]);
         k = k/2;
     }
@@ -58,7 +65,7 @@ return pq;
 void PQ_destroy(PQ *pq) {
     // TODO: Implemente essa função que libera toda a memória da fila,
     //       destruindo inclusive os eventos que estavam na fila.
-    for(int i = 0; i < pq -> max_N; i++) {
+    for(int i = 1; i < pq -> max_N; i++) {
         if(pq -> array[i]) destroy_event(pq -> array[i]);
     }
     free(pq -> array);
@@ -74,6 +81,9 @@ void PQ_insert(PQ *pq, Event *e) {
     //       Assuma que 'e' não é nulo. É importante testar overflow (inserção
     //       em uma fila que já contém o número máximo de eventos) para evitar
     //       dores de cabeça com acessos inválidos na memória.
+    pq -> last++;
+    pq -> array[pq -> last] = e;
+    rise(pq -> array, pq -> last, pq -> max_N);
 
 }
 
@@ -83,13 +93,21 @@ void PQ_insert(PQ *pq, Event *e) {
 Event* PQ_delmin(PQ *pq) {
     // TODO: Implemente essa função que remove o evento com o menor tempo da
     //       fila e o retorna.
+    if(pq -> last < 1) return NULL;
+
+    exch(pq -> array[1], pq -> array[pq -> last]);
+    Event * min = pq -> array[pq -> last];
+    pq -> last--;
+
 }
 
 /*
  * Testa se a fila está vazia.
  */
 bool PQ_is_empty(PQ *pq) {
-    // TODO: Implemente essa função.
+    // TODO: Implemente essa função.]
+    if(pq -> last > 0) return true;
+    else return false;
 }
 
 /*
@@ -97,4 +115,5 @@ bool PQ_is_empty(PQ *pq) {
  */
 int PQ_size(PQ *pq) {
     // TODO: Implemente essa função.
+    return pq -> last;
 }
